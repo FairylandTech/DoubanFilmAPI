@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="AliceEngineer">
+    <meta name="referrer" content="no-referrer">
+    <title>豆瓣电影系统 v1.0_Beta</title>
+    <link href="/static/home/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="/static/home/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/home/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>
+<body id="page-top">
+<div id="wrapper">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-2">豆瓣电影系统v1.0Beta</div>
+        </a>
+        <hr class="sidebar-divider my-0">
+        <li class="nav-item active">
+            <a class="nav-link" href="/index">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>首页</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/home/search/1">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>搜索</span></a>
+        </li>
+        </li>
+        <hr class="sidebar-divider d-none d-md-block">
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+    </ul>
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <span>豆瓣电影数据数据可视化</span>
+            </nav>
+            <div class="container-fluid">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">首页</h1>
+                </div>
+                <div class="row">
+                    <div class="col-xl-2 mb-4">
+                        <div class="card border-left-danger shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">电影数据个数</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ movie_amount }} 个</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">豆瓣最高评分</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ movie_score_max }} 分</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">作品最多演员</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ movies_actor_max }}</div>
+                                        {#                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">作品最多导演</div>#}
+                                        {#                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ movies_director_max }}</div>#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">制片最多国家</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ movies_movie_country_max }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 mb-4">
+                        <div class="card border-left-secondary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">电影类型总数</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ movies_movie_type_amount }} 个</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">电影最多语言</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ movies_movie_lang_max }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">电影种类饼状图</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="movies_pic_1" style="width: 100%; height:450px"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">电影评分折线图</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="movies_pic_2" style="width: 100%; height:450px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- tables start -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">数据统计表</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="table-layout:fixed;">
+                                <thead>
+                                <tr style="font-size: 15px">
+                                    <th>电影ID</th>
+                                    <th>电影名称</th>
+                                    <th>电影海报</th>
+                                    <th>电影评分</th>
+                                    <th>电影导演</th>
+                                    <th>电影演员</th>
+                                    <th>电影语言</th>
+                                    <th>电影片场</th>
+                                    <th>上映时间</th>
+                                    <th>电影类型</th>
+                                    <th>制片国家</th>
+                                    <th>短评数量</th>
+                                    <th>电影预告</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for movies_datum in movies_data %}
+                                    <tr style="font-size: 14px">
+                                        <td>{{ movies_datum[0] }}</td>
+                                        <td style="text-decoration: underline">
+                                            <a href="/search">{{ movies_datum[3] }}</a>
+                                        </td>
+                                        <td style="text-align: center; width: 150px;">
+                                            <a href="{{ movies_datum[6] }}" target="_blank">
+                                                <img src="{{ movies_datum[5] }}" alt="" style="width: 75%; object-fit: cover; height: 150px">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <span class="text-primary">{{ movies_datum[2] }}分</span>
+                                        </td>
+                                        <td>{{ movies_datum[1] }}</td>
+                                        <td><span style="overflow: hidden; height: 160px; display: block">{{ movies_datum[4] }}</span></td>
+                                        <td>{{ movies_datum[10] }}</td>
+                                        <td>{{ movies_datum[11] }}</td>
+                                        <td>{{ movies_datum[12] }}</td>
+                                        <td>{{ movies_datum[8] }}</td>
+                                        <td>{{ movies_datum[9] }}</td>
+                                        <td>{{ movies_datum[13] }}</td>
+                                        <td>
+                                            <a href="{{ movies_datum[18] }}">点击观看</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- tables end -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>豆瓣电影数据可视化分析 &copy; 2020. <a target="_blank" href="https://github.com/AliceEngineerPro">Author: AliceEngineer</a></span>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/static/home/vendor/jquery/jquery.min.js"></script>
+        <script src="/static/home/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/home/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="/static/home/js/sb-admin-2.min.js"></script>
+        <script src="/static/home/vendor/chart.js/Chart.min.js"></script>
+        <script src="/static/home/js/demo/chart-area-demo.js"></script>
+        <script src="/static/home/js/demo/chart-pie-demo.js"></script>
+        <script src="/static/node_modules/echarts/dist/echarts.min.js"></script>
+        <script src="/static/home/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="/static/home/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="/static/home/js/demo/datatables-demo.js"></script>
+        <script>
+            var chartDom = document.getElementById('movies_pic_1');
+            var myChart = echarts.init(chartDom);
+            var option;
+
+            option = {
+                title: {
+                    text: '电影种类饼状图',
+                    {#subtext: 'Fake Data',#}
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                },
+                series: [
+                    {
+                        name: '电影类型',
+                        type: 'pie',
+                        radius: '50%',
+                        data: {{ movies_movie_type_echarts | tojson }},
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+            option && myChart.setOption(option);
+        </script>
+        <script>
+            var chartDom = document.getElementById('movies_pic_2');
+            var myChart = echarts.init(chartDom);
+            var option;
+
+            option = {
+                title: {
+                    text: '电影评分折线图',
+                    {#subtext: 'Fake Data',#}
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: {{ result_score | tojson }}
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        data: {{ result_amount }},
+                        type: 'line',
+                        areaStyle: {}
+                    }
+                ]
+            };
+
+            option && myChart.setOption(option);
+        </script>
+    </div>
+</div>
+</body>
+
+</html>
