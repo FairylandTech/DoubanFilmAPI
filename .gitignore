@@ -354,4 +354,6 @@ cython_debug/
 # User Add
 
 .idea/
+templates/
+static/
 
