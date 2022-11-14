@@ -20,10 +20,10 @@ def index():
     movies_movie_country_max = get_index_data_mysql.get_movies_movie_country_max()
     movies_movie_type_amount = get_index_data_mysql.get_movies_movie_type_amount()
     movies_movie_lang_max = get_index_data_mysql.get_movies_movie_lang_max()
-    movies_movie_type_echarts = get_index_data_mysql.get_movies_movie_type_echarts()
-    result_score, result_amount = get_index_data_mysql.get_movies_score_echarts()
+    movies_movie_type_echarts_data = get_index_data_mysql.get_movies_movie_type_echarts()
+    movies_score_echarts_data = get_index_data_mysql.get_movies_score_echarts()
     movies_data = get_index_data_mysql.get_movies_data()
-    return render_template('index.html', **locals())
+    return render_template('./home/index.html', **locals())
 
 
 @Home.route('/search/<int:movies_id>', methods=['GET', 'POST'])
@@ -32,7 +32,7 @@ def search(movies_id):
         get_search_data = GetSearchData(movie_id=movies_id)
         movie_details_data = get_search_data.get_movies_details_data()
         print(movie_details_data)
-        return render_template('search.html')
+        return render_template('./home/search.html')
     elif request.method == 'POST':
         pass
 
