@@ -15,8 +15,8 @@ Home = Blueprint(
     name='home',
     import_name=__name__,
     url_prefix='/home',
-    template_folder='{}/templates/home'.format(Config.BASE_DIR),
-    static_folder='{}/static/home'.format(Config.BASE_DIR),
+    template_folder='{}/templates'.format(Config.BASE_DIR),
+    static_folder='{}/static'.format(Config.BASE_DIR),
 )
 
 CORS(app=Home, supports_credentials=True)
