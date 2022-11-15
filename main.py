@@ -9,5 +9,5 @@
 from source.services.core.main_app import run
 
 if __name__ == '__main__':
-    # run(debug=True, host='0.0.0.0', port=52015)
-    run()
+    run(debug=True, host='0.0.0.0', port=52015)
+    # run()

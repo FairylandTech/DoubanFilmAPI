@@ -12,7 +12,7 @@ from flask_cors import CORS
 Api = Blueprint(
     name='api',
     import_name=__name__,
-    url_prefix='/api/v1'
+    url_prefix='/api/private/v1'
 )
 
 CORS(app=Api, supports_credentials=True)
