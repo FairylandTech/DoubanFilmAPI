@@ -195,8 +195,8 @@ class GetIndexDataMysql(Query):
                 else:
                     movies_type_dict.update({'{}'.format(movie_type): movies_type_dict.get('{}'.format(movie_type)) + 1})
         for key, value in movies_type_dict.items():
-            # result_list.append({'value': value, 'name': key})
-            result_list.append({'type': key, 'amount': value})
+            result_list.append({'value': value, 'name': key})
+            # result_list.append({'type': key, 'amount': value})
         return result_list
 
     def get_movies_score_echarts(self):
@@ -212,14 +212,15 @@ class GetIndexDataMysql(Query):
                 else:
                     movies_score_dict.update({'{}'.format(movie_type): movies_score_dict.get('{}'.format(movie_type)) + 1})
         for key, value in movies_score_dict.items():
-            # result_score.append(key)
-            # result_amount.append(value)
-            result_list.append({'score': key, 'amount': value})
-        # return result_score, result_amount
-        return result_list
+            result_score.append(key)
+            result_amount.append(value)
+            # result_list.append({'score': key, 'amount': value})
+        return result_score, result_amount
+        # return result_list
     
     def get_movies_data(self):
         return self.data
+    
 
 
 

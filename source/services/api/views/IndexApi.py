@@ -12,9 +12,9 @@ from source.services.utils.GetIndexData import GetIndexDataMysql
 from source.services.api.views.PublicApi import PublicApi
 
 public_api = PublicApi()
-index_data = GetIndexDataMysql(limit=10)
+index_data = GetIndexDataMysql(limit=1000)
 
-@Api.route('/get/index/data', methods=['GET'])
+@Api.route('/home/preview/part1', methods=['GET'])
 def get_index_data():
     try:
         data_dict = {
@@ -32,12 +32,12 @@ def get_index_data():
         get_movies_movie_type_amount = index_data.get_movies_movie_type_amount()
         get_movies_movie_lang_max = index_data.get_movies_movie_lang_max()
         data_dict.update(
-            Amount=get_movies_amount,
-            ScoreMax=get_movies_score_max,
-            ActorMax=get_movies_actor_max,
-            MovieCountryMax=get_movies_movie_country_max,
-            MovieTypeAmount=get_movies_movie_type_amount,
-            MovieLangMax=get_movies_movie_lang_max
+            amount=get_movies_amount,
+            scoreMax=get_movies_score_max,
+            actorMax=get_movies_actor_max,
+            movieCountryMax=get_movies_movie_country_max,
+            movieTypeAmount=get_movies_movie_type_amount,
+            movieLangMax=get_movies_movie_lang_max
         )
         public_api.get_build_response_json(code=200, msg='Successful', data=data_dict)
         return jsonify(public_api.get_build_response_json())
@@ -45,7 +45,7 @@ def get_index_data():
         print(error)
         return jsonify(public_api.get_build_response_json())
     
-@Api.route('/get/index/echarts/data', methods=['GET'])
+@Api.route('/getIndexEchartsData', methods=['GET'])
 def get_index_echarts_data():
     try:
         data_dict = {
