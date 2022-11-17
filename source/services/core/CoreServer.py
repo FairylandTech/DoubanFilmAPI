@@ -1,20 +1,16 @@
 # coding: utf8
 """ 
-@File: main_app.py
+@File: CoreServer.py
 @Author: Alice(From Chengdu.China)
 @HomePage: https://github.com/AliceEngineerPro
 @CreatedTime: 2022/11/9 0:42
 """
 
-from flask import Flask, redirect
+from flask import Flask, jsonify
 from flask_cors import CORS
 from settings import Config
-import os
-from source.services.home import Home
-from source.services.home import views
 from source.services.api import Api
-from source.services.api.views import IndexApi
-from source.services.api.views import PublicApi
+from source.services.api.PublicApi import PublicApi
 
 app = Flask(
     import_name=__name__,
@@ -23,17 +19,17 @@ app = Flask(
 )
 app.config['JSON_AS_ASCII'] = False
 CORS(app, supports_credentials=True)
+public_api = PublicApi()
 
 
 @app.route('/')
 def root():
-    return redirect(location='/home/index')
+    return jsonify(public_api.get_build_response_json(code=200, msg='Successful'))
 
 
-app.register_blueprint(blueprint=Home)
 app.register_blueprint(blueprint=Api)
-print(app.url_map)
 
 
 def run(debug: bool = False, host: str = '127.0.0.1', port: int = 5000):
+    print(app.url_map)
     app.run(debug=debug, host=host, port=port)

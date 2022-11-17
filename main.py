@@ -6,8 +6,7 @@
 @CreatedTime: 2022/11/11 1:43
 """
 
-from source.services.core.main_app import run
+from source.services.core.CoreServer import run
 
 if __name__ == '__main__':
     run(debug=True, host='0.0.0.0', port=52015)
-    # run()

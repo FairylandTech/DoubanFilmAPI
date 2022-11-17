@@ -16,4 +16,5 @@ Api = Blueprint(
 )
 
 CORS(app=Api, supports_credentials=True)
+from source.services.api.views.AnalyseData.BaseApi import *
 
