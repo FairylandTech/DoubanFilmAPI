@@ -9,7 +9,6 @@
 from flask import Blueprint
 from flask_cors import CORS
 from settings import Config
-import os
 
 Home = Blueprint(
     name='home',

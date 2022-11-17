@@ -22,7 +22,11 @@ class PublicApi(object):
         pass
     
     def get_build_response_json(self, code=None, msg=None, data=None, remark=None):
-        if data is not None:
+        if code != 500:
+            if code == 200:
+                msg = 'Success'
+            else:
+                pass
             self.build_response_json.result_dict.update(code=code, msg=msg, data=data, remark=remark)
             return self.build_response_json.result_dict
         else:
