@@ -26,6 +26,15 @@ class DevelopmentConfig(DefaultConfig):
     MYSQL_PASSWORD = 'root'
     MYSQL_DATABASE = 'tb_douban_movies'
     MYSQL_CHARSET = ''
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8'.format(
+        MYSQL_USER,
+        MYSQL_PASSWORD,
+        MYSQL_HOST,
+        MYSQL_PORT,
+        MYSQL_DATABASE
+    )
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    JSON_AS_ASCII = False
     
     
 class ProductionConfig(DefaultConfig):

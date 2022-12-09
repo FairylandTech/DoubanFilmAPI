@@ -9,7 +9,7 @@
 from source.tools.DataFormat import DataFormat
 from source.services.utils.GetIndexData import GetIndexData, GetIndexDataMysql
 from source.services.utils.GetSearchData import GetSearchData
-from source.services.api.views.AnalyseData import BaseApi
+from source.services.api.views.DataAnalyse import BaseApi
 from settings import Config
 import time
 
