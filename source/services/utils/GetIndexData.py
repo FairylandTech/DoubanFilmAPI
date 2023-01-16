@@ -75,7 +75,9 @@ class GetIndexData(object):
 
 class GetIndexDataMysql(Query):
 
-    def __init__(self, limit: int = 50):
+    def __init__(self, limit_s: int = 1, limit_e: int = 300):
+        limit_s -= 1
+        limit_e -= limit_s
         super().__init__()
         self.id, self.directors, self.score, self.title, self.actors, \
         self.playbill_link, self.detail_link, self.release_year, self.movie_type, self.movie_country, \
@@ -102,7 +104,7 @@ class GetIndexDataMysql(Query):
                 "tb_douban_movies.tb_movies_used_info_bak_all.movie_url " \
                 "from tb_douban_movies.tb_movies_used_info_bak_all " \
                 "where tb_douban_movies.tb_movies_used_info_bak_all.is_delete = false " \
-                "limit {} ;".format(limit)
+                "limit {}, {} ;".format(limit_s, limit_e)
         self.result = self.execute(query=query)
         for did, directors, score, title, actors, \
             playbill_link, detail_link, release_year, movie_type, movie_country, \

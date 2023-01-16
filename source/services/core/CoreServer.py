@@ -5,19 +5,21 @@
 @HomePage: https://github.com/AliceEngineerPro
 @CreatedTime: 2022/11/9 0:42
 """
-
 from flask import Flask, jsonify
 from flask_cors import CORS
 from settings import Config
 from source.services.api import Api
 from source.services.api.PublicApi import PublicApi
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(
     import_name=__name__,
     template_folder='{}/templates'.format(Config.BASE_DIR),
     static_folder='{}/static'.format(Config.BASE_DIR),
 )
-app.config['JSON_AS_ASCII'] = False
+app.config.from_object(Config.RUN_ENV)
+db = SQLAlchemy(app)
+# app.config['JSON_AS_ASCII'] = False 
 CORS(app, supports_credentials=True)
 public_api = PublicApi()
 
