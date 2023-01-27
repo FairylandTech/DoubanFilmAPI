@@ -18,7 +18,7 @@ app = Flask(
     static_folder='{}/static'.format(Config.BASE_DIR),
 )
 app.config.from_object(Config.RUN_ENV)
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 # app.config['JSON_AS_ASCII'] = False 
 CORS(app, supports_credentials=True)
 public_api = PublicApi()

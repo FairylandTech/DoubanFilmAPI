@@ -11,8 +11,10 @@ from flask import render_template, request
 from source.services.utils.GetIndexData import GetIndexDataMysql
 from source.services.utils.GetSearchData import GetSearchData
 
-@Home.route('/index', methods=['GET'])
-def index():
+@Home.route('/index/<int:num>', methods=['GET'])
+def index(num):
+    movies_amount = num
+    
     get_index_data_mysql = GetIndexDataMysql(limit=300)
     movie_amount = get_index_data_mysql.get_movies_amount()
     movie_score_max = get_index_data_mysql.get_movies_score_max()

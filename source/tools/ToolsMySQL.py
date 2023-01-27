@@ -21,7 +21,22 @@ class ConnectMySQL(object):
         self.database = Config.RUN_ENV.MYSQL_DATABASE
         self.charset = Config.RUN_ENV.MYSQL_CHARSET
         
-    def connect(self):
+    # def connect(self):
+    #     try:
+    #         conn = pymysql.connect(
+    #             host=self.host,
+    #             port=self.port,
+    #             user=self.user,
+    #             password=self.password,
+    #             database=self.database,
+    #             charset=self.charset,
+    #         )
+    #         return conn
+    #     except Exception as error:
+    #         print(error)
+    #         exit(1)
+    
+    def query(self, sql):
         try:
             conn = pymysql.connect(
                 host=self.host,
@@ -29,27 +44,35 @@ class ConnectMySQL(object):
                 user=self.user,
                 password=self.password,
                 database=self.database,
-                charset=self.charset,
+                charset=self.charset
             )
-            return conn
+            cur = conn.cursor()
+            try:
+                cur.execute(query=sql)
+                result = cur.fetchall()
+            except Exception as error:
+                print(error)
         except Exception as error:
             print(error)
-            exit(1)
+        
+        cur.close()
+        conn.close()
+        return result
 
 
-class Query(ConnectMySQL):
-
-    def execute(self, query):
-        conn = self.connect()
-        cur = conn.cursor()
-        try:
-            cur.execute(query=query)
-            result = cur.fetchall()
-            cur.close()
-            conn.close()
-            return result
-        except Exception as error:
-            return error
+# class Query(ConnectMySQL):
+# 
+#     def execute(self, query):
+#         conn = self.connect()
+#         cur = conn.cursor()
+#         try:
+#             cur.execute(query=query)
+#             result = cur.fetchall()
+#             cur.close()
+#             conn.close()
+#             return result
+#         except Exception as error:
+#             return error
 
 
 class CreateEngine(object):

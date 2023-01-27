@@ -7,20 +7,29 @@
 """
 
 from source.services.api import Api
-from flask import jsonify
+from flask import jsonify, request
 from source.services.core import CoreServer
+from source.services.utils.GetIndexData import GetIndexData
+from source.services.api.PublicApi import PublicApi
 
+get_index_data = GetIndexData()
+public_api = PublicApi()
 
-@Api.route('/t')
+@Api.route('/test', methods=['GET'])
 def test():
-    CoreServer.db.reflect()
-    all_table = {table_obj.name: table_obj for table_obj in CoreServer.db.get_tables_for_bind()}
-    # 获取demo表的所有数据
-    all_data = CoreServer.db.session.query(all_table['tb_movies_used_info'])
-    data_1 = ''
-    for data in all_data:
-        print(data)  # 查看数据
-        data_1 = data
-        break
-    # 将字典转换成json数据
-    return str(data_1)
+    try:
+        num = request.args.get('num')
+        # print(num)
+        if num is None:
+            num = 500
+        print(type(num))
+        return jsonify(public_api.get_build_response_json(
+        code=200,
+        data=[num, get_index_data.test()],
+        msg='测试通过'
+    ))
+    except Exception as error:
+        return jsonify(public_api.get_build_response_json(
+            msg='{}'.format(error)
+        ))
+    pass
