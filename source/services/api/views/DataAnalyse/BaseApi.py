@@ -14,7 +14,9 @@ from source.services.api.PublicApi import PublicApi
 public_api = PublicApi()
 get_index_data = GetIndexData()
 num = 0
-
+m_type_echarts_list = None
+score_list = None
+score_num_list = None
 
 # index_data = GetIndexDataMysql()
 
@@ -164,7 +166,6 @@ num = 0
 def base_info_amount():
     global num
     try:
-        print(request.args.get('num'))
         if request.args.get('num') is None:
             num = 300
         else:
@@ -178,9 +179,12 @@ def base_info_amount():
 
 @Api.route('/base_info_score_max', methods=['GET'])
 def base_info_score_max():
-    try:return jsonify(public_api.get_build_response_json(
+    global score_list, score_num_list
+    try:
+        score_max, score_list, score_num_list = get_index_data.get_movies_score_max(num)
+        return jsonify(public_api.get_build_response_json(
         code=200,
-        data={'movies_score_max': get_index_data.get_movies_score_max(num)}
+        data={'movies_score_max': score_max}
     ))
     except Exception as error:
         return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
@@ -189,7 +193,7 @@ def base_info_score_max():
 def base_info_actor_max():
     try:return jsonify(public_api.get_build_response_json(
         code=200,
-        data={'movies_actors_max': get_index_data.get_movies_actors_max(num)}
+        data={'movies_actors_max': get_index_data.get_movies_actor_max(num)}
     ))
     except Exception as error:
         return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
@@ -205,9 +209,42 @@ def base_info_countrys_max():
     
 @Api.route('/base_info_types_amount', methods=['GET'])
 def base_info_types_amount():
+    global m_type_echarts_list
+    try:
+        base_info_types_amount, m_type_echarts_list = get_index_data.get_movies_type(limit=num)
+        return jsonify(public_api.get_build_response_json(
+        code=200,
+        data={'movies_types_amount': base_info_types_amount}
+    ))
+    except Exception as error:
+        return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
+    
+@Api.route('/base_info_languages_max')
+def base_info_languages_max():
     try:return jsonify(public_api.get_build_response_json(
         code=200,
-        data={'movies_types_amount': get_index_data.get_movies_type(num)}
+        data={'movies_languages_max': get_index_data.get_movies_languange_max(num)}
+    ))
+    except Exception as error:
+        return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
+    
+@Api.route('/echarts_info_movies_type')
+def echarts_info_movies_type():
+    try:return jsonify(public_api.get_build_response_json(
+        code=200,
+        data={'m_type_echarts': m_type_echarts_list}
+    ))
+    except Exception as error:
+        return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
+    
+@Api.route('echarts_info_movies_score')
+def echarts_info_movies_score():
+    try:return jsonify(public_api.get_build_response_json(
+        code=200,
+        data={
+            'score': score_list,
+            'score_num': score_num_list
+        }
     ))
     except Exception as error:
         return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))

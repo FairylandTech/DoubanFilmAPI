@@ -237,9 +237,22 @@ class GetIndexData(object):
         sql = """
         select tb_movies_used_info.score from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
         """.format(limit)
-        return max([row for row in self.connect_mysql.query(sql=sql)])
+        score_list_temp = [row[0] for row in self.connect_mysql.query(sql=sql)]
+        score_dict_temp = {}
+        score_list = []
+        score_num_list = []
+        for score in score_list_temp:
+            if score_dict_temp.get('{}'.format(score)) is None:
+                score_dict_temp['{}'.format(score)] = 1
+            else:
+                score_dict_temp['{}'.format(score)] += 1
+        score_dict_temp = {data[0]: data[1] for data in sorted(score_dict_temp.items(), key=lambda x: x[0])}
+        for score, score_num in score_dict_temp.items():
+            score_list.append(score)
+            score_num_list.append(score_num)
+        return max(score_list_temp), score_list, score_num_list
     
-    def get_movies_actors_max(self, limit):
+    def get_movies_actor_max(self, limit):
         sql = """
         select tb_movies_used_info.actors from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
         """.format(limit)
@@ -269,11 +282,33 @@ class GetIndexData(object):
         """.format(limit)
         m_types_list_temp = [row[0] for row in self.connect_mysql.query(sql=sql)]
         m_type_list = []
+        m_type_echarts_dict = {}
+        m_type_echarts_list = []
         for m_types in m_types_list_temp:
             m_types: str
-            for m_type in m_types:
+            for m_type in m_types.split(','):
                 m_type_list.append(m_type)
+        for m_type in m_type_list:
+            if m_type_echarts_dict.get('{}'.format(m_type)) is None:
+                m_type_echarts_dict['{}'.format(m_type)] = 1
+            else:
+                m_type_echarts_dict['{}'.format(m_type)] += 1
+        for key, value in m_type_echarts_dict.items():
+            m_type_echarts_list.append({'name': key, 'value': value})
         
-        return len(set(m_type_list))
+        return len(set(m_type_list)), m_type_echarts_list
     
-    
+    def get_movies_languange_max(self, limit):
+        sql = """
+        select tb_movies_used_info.movie_lang from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
+        """.format(limit)
+        languages_list_temp = [row[0] for row in self.connect_mysql.query(sql=sql)]
+        languages_list = []
+        for languages in languages_list_temp:
+            languages: str
+            for language in languages.split(','):
+                languages_list.append(language)
+        return max(languages_list, key=languages_list.count)
+
+
+
