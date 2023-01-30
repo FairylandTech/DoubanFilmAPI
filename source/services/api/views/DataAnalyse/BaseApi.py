@@ -15,7 +15,7 @@ from source.services.utils.GetDetailedMsg import GetDetailedMsg
 public_api = PublicApi()
 get_index_data = GetIndexData()
 get_detailed_msg = GetDetailedMsg()
-num = 0
+num = 300
 m_type_echarts_list = None
 score_list = None
 score_num_list = None
@@ -169,7 +169,8 @@ def base_info_amount():
     global num
     try:
         if request.args.get('num') is None:
-            num = 300
+            # num = 300
+            pass
         else:
             num = request.args.get('num')
         return jsonify(public_api.get_build_response_json(
@@ -255,8 +256,18 @@ def echarts_info_movies_score():
 def movies_details_msg():
     if request.method == 'GET':
         start_num = request.args.get('s')
-        num = request.args.get('n')
-        movies_details_list, movies_amount = get_detailed_msg.get_movies_detailed(start_num=start_num, num=num)
+        set_num = request.args.get('n')
+        if start_num is None or set_num is None:
+            return jsonify(public_api.get_build_response_json(msg='{}'.format('接口参数异常')))
+        try:
+            start_num = int(start_num) - 1
+            movies_details_list, movies_amount = get_detailed_msg.get_movies_detailed(start=start_num, num=set_num)
+            return jsonify(public_api.get_build_response_json(
+                code=200,
+                data=[{'details_list': movies_details_list},{'movies_amount': movies_amount}]
+            ))
+        except Exception as error:
+            return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
     if request.method == 'POST':
         try:
             pass
