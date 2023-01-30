@@ -10,9 +10,11 @@ from source.services.api import Api
 from flask import jsonify, request
 from source.services.utils.GetIndexData import GetIndexData
 from source.services.api.PublicApi import PublicApi
+from source.services.utils.GetDetailedMsg import GetDetailedMsg
 
 public_api = PublicApi()
 get_index_data = GetIndexData()
+get_detailed_msg = GetDetailedMsg()
 num = 0
 m_type_echarts_list = None
 score_list = None
@@ -248,5 +250,17 @@ def echarts_info_movies_score():
     ))
     except Exception as error:
         return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
+    
+@Api.route('/movies_details_msg', methods=['GET', 'POST'])
+def movies_details_msg():
+    if request.method == 'GET':
+        start_num = request.args.get('s')
+        num = request.args.get('n')
+        movies_details_list, movies_amount = get_detailed_msg.get_movies_detailed(start_num=start_num, num=num)
+    if request.method == 'POST':
+        try:
+            pass
+        except Exception as error:
+            return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
 
 
