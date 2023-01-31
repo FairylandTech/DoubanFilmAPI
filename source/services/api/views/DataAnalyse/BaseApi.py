@@ -255,13 +255,13 @@ def echarts_info_movies_score():
 @Api.route('/movies_details_msg', methods=['GET', 'POST'])
 def movies_details_msg():
     if request.method == 'GET':
-        start_num = request.args.get('s')
-        set_num = request.args.get('n')
-        if start_num is None or set_num is None:
+        page_num = request.args.get('page')
+        amount = request.args.get('num')
+        if page_num is None or amount is None:
             return jsonify(public_api.get_build_response_json(msg='{}'.format('接口参数异常')))
         try:
-            start_num = int(start_num) - 1
-            movies_details_list, movies_amount = get_detailed_msg.get_movies_detailed(start=start_num, num=set_num)
+            start_num = (int(page_num) - 1) * int(amount)
+            movies_details_list, movies_amount = get_detailed_msg.get_movies_detailed(start=start_num, num=amount)
             return jsonify(public_api.get_build_response_json(
                 code=200,
                 data=[{'details_list': movies_details_list},{'movies_amount': movies_amount}]
