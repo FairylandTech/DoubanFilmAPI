@@ -169,8 +169,7 @@ def base_info_amount():
     global num
     try:
         if request.args.get('num') is None:
-            # num = 300
-            pass
+            num = 300
         else:
             num = request.args.get('num')
         return jsonify(public_api.get_build_response_json(
