@@ -18,4 +18,6 @@ Api = Blueprint(
 CORS(app=Api, supports_credentials=True)
 from source.services.api.views.DataAnalyse.BaseApi import *
 from source.services.api.views.DataAnalyse.test import test
+from source.services.api.views.DataAnalyse.AnalyseDataTime import *
+from source.services.api.views.DataAnalyse.AnalyseDataScore import *
 
