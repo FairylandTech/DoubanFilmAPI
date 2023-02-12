@@ -35,7 +35,6 @@ def get_movies_types_scores_ratio():
             return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
     if request.method == 'POST':
         req_type = request.form.get('m_type')
-        # print(req_type)
         m_type_score_dict = {}
         m_type_score = []
         m_type_num = []

@@ -13,18 +13,18 @@ from source.tools.ToolsMySQL import ConnectMySQL
 class GetAnalyseData(object):
     
     def __init__(self):
-        self.connect_mysql = ConnectMySQL()
+        self.connect = ConnectMySQL()
         
     def get_movies_release_year(self, limit):
         sql = """
         select tb_movies_used_info.release_year from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ; 
         """.format(limit)
-        return self.connect_mysql.query(sql=sql)
+        return self.connect.query(sql=sql)
         
     def get_movies_long(self, limit):
         sql = """
         select tb_movies_used_info.movie_long from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
         """.format(limit)
-        return self.connect_mysql.query(sql=sql)
+        return self.connect.query(sql=sql)
 
 
