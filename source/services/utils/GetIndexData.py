@@ -251,18 +251,23 @@ class GetIndexData(object):
             score_list.append(score)
             score_num_list.append(score_num)
         return max(score_list_temp), score_list, score_num_list
-    
+    # @numba.jit()
     def get_movies_actor_max(self, limit):
         sql = """
         select tb_movies_used_info.actors from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
         """.format(limit)
         actors_list_temp = [row[0] for row in self.connect.query(sql=sql)]
         actors_list = []
+        actors_dict_temp = {}
         for actors in actors_list_temp:
             actors: str
             for actor in actors.split(','):
                 actors_list.append(actor)
-        return max(actors_list, key=actors_list.count)
+        for item in actors_list:
+            print(item)
+            actors_dict_temp['{}'.format(item)] = actors_dict_temp.setdefault(item, 0) + 1
+        print(actors_dict_temp)
+        return max(set(actors_list), key=actors_list.count)
     
     def get_movies_country_max(self, limit):
         sql = """
