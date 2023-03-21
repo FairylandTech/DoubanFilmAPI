@@ -264,9 +264,9 @@ class GetIndexData(object):
             for actor in actors.split(','):
                 actors_list.append(actor)
         for item in actors_list:
-            print(item)
+            # print(item)
             actors_dict_temp['{}'.format(item)] = actors_dict_temp.setdefault(item, 0) + 1
-        print(actors_dict_temp)
+        # print(actors_dict_temp)
         return max(set(actors_list), key=actors_list.count)
     
     def get_movies_country_max(self, limit):

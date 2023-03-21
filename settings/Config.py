@@ -23,7 +23,7 @@ class DefaultConfig(object):
     
 class DevelopmentConfig(DefaultConfig):
     __version = '1.0.0_Dev'
-    MYSQL_HOST = '10.31.102.2'
+    MYSQL_HOST = '11.0.0.12'
     MYSQL_PORT = 13306
     MYSQL_USER = 'root'
     MYSQL_PASSWORD = 'root'
@@ -42,9 +42,9 @@ class DevelopmentConfig(DefaultConfig):
     
 class ProductionConfig(DefaultConfig):
     __version = '1.0.0_Releases'
-    MYSQL_HOST = 'connect.mysql**'
+    MYSQL_HOST = 'connect.sql.alicehome.ltd'
     MYSQL_PORT = 23306
-    MYSQL_USER = '**'
+    MYSQL_USER = 'projects'
     MYSQL_PASSWORD = 'Projects@123-'
     MYSQL_DATABASE = 'tb_douban_movies'
     MYSQL_CHARSET = ''
