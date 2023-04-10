@@ -24,7 +24,7 @@ class DefaultConfig(object):
 class DevelopmentConfig(DefaultConfig):
     __version = '1.0.0_Dev'
     MYSQL_HOST = '11.0.0.12'
-    MYSQL_PORT = 13306
+    MYSQL_PORT = 13308
     MYSQL_USER = 'root'
     MYSQL_PASSWORD = 'root'
     MYSQL_DATABASE = 'tb_douban_movies'
