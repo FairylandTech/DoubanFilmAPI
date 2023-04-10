@@ -13,7 +13,7 @@ from source.tools.ToolsMySQL import ConnectMySQL
 class GetAnalyseDataScore:
 
     def __init__(self):
-        self.connection = ConnectMySQL()
+        self.connect = ConnectMySQL()
 
     def get_movies_types(self, limit):
         m_type_sql = """
@@ -22,7 +22,7 @@ class GetAnalyseDataScore:
         where tb_douban_movies.tb_movies_used_info.is_delete is false
         limit {} ;
         """.format(limit)
-        return self.connection.query(sql=m_type_sql)
+        return self.connect.query(sql=m_type_sql)
     
     def get_movies_types_score(self, limit, m_type):
         m_type_score_sql = """
@@ -34,4 +34,4 @@ class GetAnalyseDataScore:
             limit {}) as temp
         where temp.movie_type like '%{}%' ;
         """.format(limit, m_type)
-        return self.connection.query(sql=m_type_score_sql)
+        return self.connect.query(sql=m_type_score_sql)

@@ -263,7 +263,7 @@ def movies_details_msg():
             movies_details_list, movies_amount = get_detailed_msg.get_movies_detailed(start=start_num, num=amount)
             return jsonify(public_api.get_build_response_json(
                 code=200,
-                data=[{'details_list': movies_details_list},{'movies_amount': movies_amount}]
+                data={'details_list': movies_details_list, 'movies_amount': movies_amount}
             ))
         except Exception as error:
             return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))

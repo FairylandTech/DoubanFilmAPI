@@ -7,6 +7,7 @@
 @CreatedTime: 2023/2/2 2:26
 """
 
+import json
 from source.services.api.PublicApi import PublicApi
 from source.services.api import Api
 from flask import request, jsonify
@@ -34,8 +35,9 @@ def get_movies_types_scores_ratio():
         except Exception as error:
             return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
     if request.method == 'POST':
-        req_type = request.form.get('m_type')
-        # print(req_type)
+        # req_type = request.form.get('m_type')
+        req_data: dict = json.loads(bytes.decode(request.data, encoding='utf-8'))
+        req_type = req_data.get('m_type')
         m_type_score_dict = {}
         m_type_score = []
         m_type_num = []

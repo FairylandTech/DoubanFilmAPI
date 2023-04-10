@@ -224,20 +224,20 @@ from source.tools.ToolsMySQL import ConnectMySQL
 class GetIndexData(object):
     
     def __init__(self):
-        self.connect_mysql = ConnectMySQL()
+        self.connect = ConnectMySQL()
         pass
     
     def test(self):
         sql = """
         select count(tb_movies_used_info.id) from tb_movies_used_info where tb_movies_used_info.is_delete is FALSE ;
         """
-        return self.connect_mysql.query(sql=sql)[0][0]
+        return self.connect.query(sql=sql)[0][0]
     
     def get_movies_score_max(self, limit):
         sql = """
         select tb_movies_used_info.score from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
         """.format(limit)
-        score_list_temp = [row[0] for row in self.connect_mysql.query(sql=sql)]
+        score_list_temp = [row[0] for row in self.connect.query(sql=sql)]
         score_dict_temp = {}
         score_list = []
         score_num_list = []
@@ -251,24 +251,29 @@ class GetIndexData(object):
             score_list.append(score)
             score_num_list.append(score_num)
         return max(score_list_temp), score_list, score_num_list
-    
+    # @numba.jit()
     def get_movies_actor_max(self, limit):
         sql = """
         select tb_movies_used_info.actors from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
         """.format(limit)
-        actors_list_temp = [row[0] for row in self.connect_mysql.query(sql=sql)]
+        actors_list_temp = [row[0] for row in self.connect.query(sql=sql)]
         actors_list = []
+        actors_dict_temp = {}
         for actors in actors_list_temp:
             actors: str
             for actor in actors.split(','):
                 actors_list.append(actor)
-        return max(actors_list, key=actors_list.count)
+        for item in actors_list:
+            # print(item)
+            actors_dict_temp['{}'.format(item)] = actors_dict_temp.setdefault(item, 0) + 1
+        # print(actors_dict_temp)
+        return max(set(actors_list), key=actors_list.count)
     
     def get_movies_country_max(self, limit):
         sql = """
         select tb_movies_used_info.movie_country from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
         """.format(limit)
-        countrys_list_temp = [row[0] for row in self.connect_mysql.query(sql=sql)]
+        countrys_list_temp = [row[0] for row in self.connect.query(sql=sql)]
         country_list = []
         for countrys in countrys_list_temp:
             countrys: str
@@ -280,7 +285,7 @@ class GetIndexData(object):
         sql = """
         select tb_movies_used_info.movie_type from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;    
         """.format(limit)
-        m_types_list_temp = [row[0] for row in self.connect_mysql.query(sql=sql)]
+        m_types_list_temp = [row[0] for row in self.connect.query(sql=sql)]
         m_type_list = []
         m_type_echarts_dict = {}
         m_type_echarts_list = []
@@ -302,7 +307,7 @@ class GetIndexData(object):
         sql = """
         select tb_movies_used_info.movie_lang from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
         """.format(limit)
-        languages_list_temp = [row[0] for row in self.connect_mysql.query(sql=sql)]
+        languages_list_temp = [row[0] for row in self.connect.query(sql=sql)]
         languages_list = []
         for languages in languages_list_temp:
             languages: str

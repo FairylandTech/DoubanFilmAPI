@@ -34,7 +34,7 @@ def search(movies_id):
     if request.method == 'GET':
         get_search_data = GetSearchData(movie_id=movies_id)
         movie_details_data = get_search_data.get_movies_details_data()
-        print(movie_details_data)
+        # print(movie_details_data)
         return render_template('home/search.html')
     elif request.method == 'POST':
         pass
