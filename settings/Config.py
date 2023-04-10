@@ -11,9 +11,9 @@ import os
 BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 BASE_DIR_2 = os.path.dirname(os.path.realpath(__name__))
 # RUN_ENV Option: DevelopmentConfig, ProductionConfig; if other RUN_ENV is DefaultConfig
-RUN_ENV = 'DevelopmentConfig'
+# RUN_ENV = 'DevelopmentConfig'
 # RUN_ENV = 'ProductionConfig'
-# RUN_ENV = 'WorkSpaceConfig'
+RUN_ENV = 'WorkSpaceConfig'
 # RUN_ENV = ''
 
 class DefaultConfig(object):

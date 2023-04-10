@@ -21,4 +21,5 @@ from source.services.api.views.DataAnalyse.test import test
 from source.services.api.views.DataAnalyse.AnalyseDataTime import *
 from source.services.api.views.DataAnalyse.AnalyseDataScore import *
 from source.services.api.views.DataAnalyse.AnalyseDataCountry import *
+from source.services.api.views.DataAnalyse.AnalyseDirectors import *
 

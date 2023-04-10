@@ -15,9 +15,46 @@ sys.dont_write_bytecode = True
 from flask import jsonify
 from source.services.api.PublicApi import PublicApi
 from source.services.api import Api
+from source.services.utils.GetAnalyseDirectors import GetAnalyseDirectors
+from source.services.api.views.DataAnalyse.BaseApi import num
+from flask import request
 
 public_api = PublicApi()
+get_analyse_directors = GetAnalyseDirectors()
 
-@Api.route(rule='/directors', methods=['GET'])
+
+@Api.route('/directors', methods=['GET'])
 def directors():
-    pass
+    try:
+        result = get_analyse_directors.get_analyse_directors(limit_num=num)
+        return jsonify(public_api.get_build_response_json(
+            code=200,
+            data=result
+        ))
+    except Exception as error:
+        return jsonify(public_api.get_build_response_json(
+            code=500,
+            msg='{}'.format(error)
+        ))
+
+
+@Api.route('/directors_movies', methods=['GET'])
+def get_directors_movies_details():
+    try:
+        name = request.args.get('name')
+        num = int(request.args.get('num'))
+        if name or num is None:
+            return jsonify(public_api.get_build_response_json(
+                code=500,
+                msg='参数错误'
+            ))
+        details = get_analyse_directors.get_analyse_directors_movies(director_name=name, amount_num=num)
+        return jsonify(public_api.get_build_response_json(
+            code=200,
+            data={'details': details}
+        ))
+    except Exception as error:
+        jsonify(public_api.get_build_response_json(
+            code=500,
+            msg='1{}'.format(error)
+        ))
