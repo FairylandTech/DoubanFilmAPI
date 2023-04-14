@@ -43,6 +43,7 @@ def get_directors_movies_details():
     try:
         name = request.args.get('name')
         num = int(request.args.get('num'))
+        print(repr(name), repr(num), type(name), type(num))
         if name or num is None:
             return jsonify(public_api.get_build_response_json(
                 code=500,
@@ -56,5 +57,5 @@ def get_directors_movies_details():
     except Exception as error:
         jsonify(public_api.get_build_response_json(
             code=500,
-            msg='1{}'.format(error)
+            msg='{}'.format(error)
         ))
