@@ -45,7 +45,6 @@ from tb_movies_used_info
 where is_delete is false
 and directors like '%{}%'
 limit {} ;""".format(director_name, amount_num)
-        print(sql)
         query_result = self.conn.query(sql=sql)
         result_list = []
         for row in query_result:

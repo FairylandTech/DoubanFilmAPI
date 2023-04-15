@@ -42,14 +42,13 @@ def directors():
 def get_directors_movies_details():
     try:
         name = request.args.get('name')
-        num = int(request.args.get('num'))
-        print(repr(name), repr(num), type(name), type(num))
-        if name or num is None:
+        num = request.args.get('num')
+        if name is None or num is None:
             return jsonify(public_api.get_build_response_json(
                 code=500,
                 msg='参数错误'
             ))
-        details = get_analyse_directors.get_analyse_directors_movies(director_name=name, amount_num=num)
+        details = get_analyse_directors.get_analyse_directors_movies(director_name=name, amount_num=int(num))
         return jsonify(public_api.get_build_response_json(
             code=200,
             data={'details': details}

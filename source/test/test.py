@@ -16,6 +16,10 @@ import re
 from source.services.utils.GetAnalyseDataScore import GetAnalyseDataScore
 from source.services.utils.GetAnalyseDataCountry import GetAnalyseDataCountry
 
+import warnings
+
+# warnings.filterwarnings('ignore')
+
 
 def get_analyse_directors():
     from source.services.utils.GetAnalyseDirectors import GetAnalyseDirectors
@@ -27,6 +31,7 @@ def get_analyse_directors():
 
 
 if __name__ == '__main__':
+    warnings.filterwarnings('ignore')
     s = time.time()
     limit = 400
 
