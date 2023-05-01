@@ -15,7 +15,7 @@ from source.services.utils.GetDetailedMsg import GetDetailedMsg
 public_api = PublicApi()
 get_index_data = GetIndexData()
 get_detailed_msg = GetDetailedMsg()
-num = 300
+num = 10000
 m_type_echarts_list = None
 score_list = None
 score_num_list = None
@@ -170,7 +170,7 @@ def base_info_amount():
     global num
     try:
         if request.args.get('num') is None:
-            num = 300
+            num = 10000
         else:
             num = request.args.get('num')
         return jsonify(public_api.get_build_response_json(
@@ -270,17 +270,29 @@ def movies_details_msg():
     if request.method == 'GET':
         page_num = request.args.get('page')
         amount = request.args.get('num')
-        if page_num is None or amount is None:
-            return jsonify(public_api.get_build_response_json(msg='{}'.format('接口参数异常')))
-        try:
-            start_num = (int(page_num) - 1) * int(amount)
-            movies_details_list, movies_amount = get_detailed_msg.get_movies_detailed(start=start_num, num=amount)
-            return jsonify(public_api.get_build_response_json(
-                code=200,
-                data={'details_list': movies_details_list, 'movies_amount': movies_amount}
-            ))
-        except Exception as error:
-            return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
+        keywd = request.args.get('kw')
+        if keywd is None:
+            if page_num is None or amount is None:
+                return jsonify(public_api.get_build_response_json(msg='{}'.format('接口参数异常')))
+            try:
+                start_num = (int(page_num) - 1) * int(amount)
+                movies_details_list, movies_amount = get_detailed_msg.get_movies_detailed(start=start_num, num=amount)
+                return jsonify(public_api.get_build_response_json(
+                    code=200,
+                    data={'details_list': movies_details_list, 'movies_amount': movies_amount}
+                ))
+            except Exception as error:
+                return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
+        else:
+            try:
+                start_num = (int(page_num) - 1) * int(amount)
+                movies_details_list, movies_amount = get_detailed_msg.get_movies_detailed(start=start_num, num=amount, keywd=keywd)
+                return jsonify(public_api.get_build_response_json(
+                    code=200,
+                    data={'details_list': movies_details_list, 'movies_amount': movies_amount}
+                ))
+            except Exception as error:
+                return jsonify(public_api.get_build_response_json(msg='{}'.format(error)))
     if request.method == 'POST':
         try:
             pass

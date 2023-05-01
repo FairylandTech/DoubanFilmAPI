@@ -15,28 +15,57 @@ class GetDetailedMsg(object):
     def __init__(self):
         self.connect = ConnectMySQL()
         
-    def get_movies_detailed(self, start, num):
+    def get_movies_detailed(self, start, num, keywd=None):
+        if keywd is None:
+            sql = """
+            select tb_movies_used_info.directors,
+                tb_movies_used_info.score,
+                tb_movies_used_info.title,
+                tb_movies_used_info.actors,
+                tb_movies_used_info.playbill_link,
+                tb_movies_used_info.detail_link,
+                tb_movies_used_info.release_year,
+                tb_movies_used_info.movie_type,
+                tb_movies_used_info.movie_country,
+                tb_movies_used_info.movie_lang,
+                tb_movies_used_info.release_time,
+                tb_movies_used_info.movie_long,
+                tb_movies_used_info.short_review_num,
+                tb_movies_used_info.summary,
+                tb_movies_used_info.movie_url
+            from tb_movies_used_info
+            where tb_movies_used_info.is_delete is false
+            limit {}, {} ;
+            """.format(start, num)
+            movie_amount = [row for row in self.connect.query(sql="""
+            select count(*) from tb_movies_used_info where tb_movies_used_info.is_delete is false ;
+            """)][0][0]
+        else:
+            sql = """
+            select tb_movies_used_info.directors,
+                tb_movies_used_info.score,
+                tb_movies_used_info.title,
+                tb_movies_used_info.actors,
+                tb_movies_used_info.playbill_link,
+                tb_movies_used_info.detail_link,
+                tb_movies_used_info.release_year,
+                tb_movies_used_info.movie_type,
+                tb_movies_used_info.movie_country,
+                tb_movies_used_info.movie_lang,
+                tb_movies_used_info.release_time,
+                tb_movies_used_info.movie_long,
+                tb_movies_used_info.short_review_num,
+                tb_movies_used_info.summary,
+                tb_movies_used_info.movie_url
+            from tb_movies_used_info
+            where tb_movies_used_info.is_delete is false
+            and title like '%{}%'
+            limit {}, {} ;
+            """.format(keywd, start, num)
+            movie_amount = [row for row in self.connect.query(sql="""
+            select count(*) from tb_movies_used_info where tb_movies_used_info.is_delete is false and title like '%{}%' ;
+            """.format(keywd))][0][0]
         ret_list = []
-        sql = """
-        select tb_movies_used_info.directors,
-            tb_movies_used_info.score,
-            tb_movies_used_info.title,
-            tb_movies_used_info.actors,
-            tb_movies_used_info.playbill_link,
-            tb_movies_used_info.detail_link,
-            tb_movies_used_info.release_year,
-            tb_movies_used_info.movie_type,
-            tb_movies_used_info.movie_country,
-            tb_movies_used_info.movie_lang,
-            tb_movies_used_info.release_time,
-            tb_movies_used_info.movie_long,
-            tb_movies_used_info.short_review_num,
-            tb_movies_used_info.summary,
-            tb_movies_used_info.movie_url
-        from tb_movies_used_info
-        where tb_movies_used_info.is_delete is false
-        limit {}, {} ;
-        """.format(start, num)
         for row_index, row in enumerate(self.connect.query(sql=sql)):
             movie_detail_dict = {
                 # Id
@@ -75,9 +104,6 @@ class GetDetailedMsg(object):
             if movie_detail_dict.get('video') == '':
                 movie_detail_dict['video'] = movie_detail_dict.get('playbill_url')
             ret_list.append(movie_detail_dict)
-        movie_amount = [row for row in self.connect.query(sql="""
-        select count(*) from tb_movies_used_info where tb_movies_used_info.is_delete is false ;
-        """)][0][0]
         return ret_list, movie_amount
 
 

@@ -23,10 +23,10 @@ class DefaultConfig(object):
     
 class DevelopmentConfig(DefaultConfig):
     __version = '1.0.0_Dev'
-    MYSQL_HOST = '11.0.0.12'
-    MYSQL_PORT = 13308
+    MYSQL_HOST = '10.0.12.2'
+    MYSQL_PORT = 13306
     MYSQL_USER = 'root'
-    MYSQL_PASSWORD = 'root'
+    MYSQL_PASSWORD = 'Mysql.pwd_5.8%'
     MYSQL_DATABASE = 'tb_douban_movies'
     MYSQL_CHARSET = ''
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8'.format(
