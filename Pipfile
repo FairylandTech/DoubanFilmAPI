@@ -12,6 +12,7 @@ pymysql = "==1.0.2"
 sqlalchemy = "==1.4.43"
 tornado = "==6.2"
 cryptography = "*"
+wordcloud = "*"
 
 [dev-packages]
 

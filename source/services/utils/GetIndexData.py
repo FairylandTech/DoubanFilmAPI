@@ -8,7 +8,8 @@
 
 # from source.tools.DataFormat import DataFormat
 from source.tools.ToolsMySQL import ConnectMySQL
-
+import numpy as np
+from collections import Counter
 
 # class GetIndexData(object):
 # 
@@ -222,17 +223,17 @@ from source.tools.ToolsMySQL import ConnectMySQL
 
 
 class GetIndexData(object):
-    
+
     def __init__(self):
         self.connect = ConnectMySQL()
         pass
-    
+
     def test(self):
         sql = """
         select count(tb_movies_used_info.id) from tb_movies_used_info where tb_movies_used_info.is_delete is FALSE ;
         """
         return self.connect.query(sql=sql)[0][0]
-    
+
     def get_movies_score_max(self, limit):
         sql = """
         select tb_movies_used_info.score from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
@@ -250,7 +251,12 @@ class GetIndexData(object):
         for score, score_num in score_dict_temp.items():
             score_list.append(score)
             score_num_list.append(score_num)
-        return max(score_list_temp), score_list, score_num_list
+        va = score_list_temp[0]
+        for value in score_list_temp:
+            if value > va:
+                va = value
+        return va, score_list, score_num_list
+    
     # @numba.jit()
     def get_movies_actor_max(self, limit):
         sql = """
@@ -263,12 +269,14 @@ class GetIndexData(object):
             actors: str
             for actor in actors.split(','):
                 actors_list.append(actor)
-        for item in actors_list:
-            # print(item)
-            actors_dict_temp['{}'.format(item)] = actors_dict_temp.setdefault(item, 0) + 1
-        # print(actors_dict_temp)
-        return max(set(actors_list), key=actors_list.count)
-    
+        counter = Counter(actors_list)
+        max_actors = counter.most_common(1)[0][0]
+        # for item in actors_list:
+        #     print(item)
+            # actors_dict_temp['{}'.format(item)] = actors_dict_temp.setdefault(item, 0) + 1
+        # print(actors_list)
+        return max_actors
+
     def get_movies_country_max(self, limit):
         sql = """
         select tb_movies_used_info.movie_country from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
@@ -279,8 +287,11 @@ class GetIndexData(object):
             countrys: str
             for country in countrys.split(','):
                 country_list.append(country)
-        return max(country_list, key=country_list.count)
-    
+        # return np.max(country_list, key=country_list.count)
+        counter = Counter(country_list)
+        max_country = counter.most_common(1)[0][0]
+        return max_country
+
     def get_movies_type(self, limit):
         sql = """
         select tb_movies_used_info.movie_type from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;    
@@ -300,9 +311,9 @@ class GetIndexData(object):
                 m_type_echarts_dict['{}'.format(m_type)] += 1
         for key, value in m_type_echarts_dict.items():
             m_type_echarts_list.append({'name': key, 'value': value})
-        
+
         return len(set(m_type_list)), m_type_echarts_list
-    
+
     def get_movies_languange_max(self, limit):
         sql = """
         select tb_movies_used_info.movie_lang from tb_movies_used_info where tb_movies_used_info.is_delete is false limit {} ;
@@ -313,7 +324,6 @@ class GetIndexData(object):
             languages: str
             for language in languages.split(','):
                 languages_list.append(language)
-        return max(languages_list, key=languages_list.count)
-
-
-
+        counter = Counter(languages_list)
+        ma = counter.most_common(1)[0][0]
+        return ma
