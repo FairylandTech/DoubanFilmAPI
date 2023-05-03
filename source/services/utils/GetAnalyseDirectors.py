@@ -35,7 +35,7 @@ limit {} ;""".format(limit_num)
                 directors += director_list
             else:
                 directors.append(row)
-        sort_dict = dict(sorted(Counter(directors).items(), key=lambda x: x[1], reverse=True)[:3])
+        sort_dict = dict(sorted(Counter(directors).items(), key=lambda x: x[1], reverse=True)[:20])
         return sort_dict
     
     
