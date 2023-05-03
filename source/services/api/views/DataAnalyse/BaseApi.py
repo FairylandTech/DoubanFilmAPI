@@ -218,7 +218,6 @@ def base_info_countrys_max():
 
 @Api.route('/base_info_types_amount', methods=['GET'])
 def base_info_types_amount():
-    global m_type_echarts_list
     try:
         base_info_types_amount, m_type_echarts_list = get_index_data.get_movies_type(limit=num)
         return jsonify(public_api.get_build_response_json(
@@ -243,6 +242,7 @@ def base_info_languages_max():
 @Api.route('/echarts_info_movies_type')
 def echarts_info_movies_type():
     try:
+        base_info_types_amount, m_type_echarts_list = get_index_data.get_movies_type(limit=num)
         return jsonify(public_api.get_build_response_json(
             code=200,
             data={'m_type_echarts': m_type_echarts_list}
