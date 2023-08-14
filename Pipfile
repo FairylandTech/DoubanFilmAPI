@@ -10,7 +10,7 @@ flask-sqlalchemy = "==3.0.2"
 pandas = "==1.5.1"
 pymysql = "==1.0.2"
 sqlalchemy = "==1.4.43"
-tornado = "==6.2"
+tornado = "==6.3.3"
 cryptography = "*"
 wordcloud = "*"
 
