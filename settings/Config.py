@@ -23,7 +23,7 @@ class DefaultConfig(object):
     
 class DevelopmentConfig(DefaultConfig):
     __version = '1.0.0_Dev'
-    MYSQL_HOST = '10.0.12.2'
+    MYSQL_HOST = '10.0.12.3'
     MYSQL_PORT = 13306
     MYSQL_USER = 'root'
     MYSQL_PASSWORD = 'Mysql.pwd_5.8%'
