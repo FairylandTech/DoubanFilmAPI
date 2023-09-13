@@ -11,8 +11,8 @@ import os
 BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 BASE_DIR_2 = os.path.dirname(os.path.realpath(__name__))
 # RUN_ENV Option: DevelopmentConfig, ProductionConfig; if other RUN_ENV is DefaultConfig
-RUN_ENV = 'DevelopmentConfig'
-# RUN_ENV = 'ProductionConfig'
+# RUN_ENV = 'DevelopmentConfig'
+RUN_ENV = 'ProductionConfig'
 # RUN_ENV = 'WorkSpaceConfig'
 # RUN_ENV = ''
 
@@ -23,7 +23,7 @@ class DefaultConfig(object):
     
 class DevelopmentConfig(DefaultConfig):
     __version = '1.0.0_Dev'
-    MYSQL_HOST = '10.0.12.2'
+    MYSQL_HOST = '10.0.12.3'
     MYSQL_PORT = 13306
     MYSQL_USER = 'root'
     MYSQL_PASSWORD = 'Mysql.pwd_5.8%'
@@ -42,10 +42,10 @@ class DevelopmentConfig(DefaultConfig):
     
 class ProductionConfig(DefaultConfig):
     __version = '1.0.0_Releases'
-    MYSQL_HOST = 'connect.sql.alicehome.ltd'
-    MYSQL_PORT = 23306
-    MYSQL_USER = 'projects'
-    MYSQL_PASSWORD = 'Projects@123-'
+    MYSQL_HOST = ''
+    MYSQL_PORT = 0
+    MYSQL_USER = 'root'
+    MYSQL_PASSWORD = 'Mysql.pwd_5.8%'
     MYSQL_DATABASE = 'tb_douban_movies'
     MYSQL_CHARSET = ''
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8'.format(

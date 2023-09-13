@@ -6,10 +6,10 @@
 @CreatedTime: 2022/11/9 18:56
 """
 
-# from source.tools.DataFormat import DataFormat
 from source.tools.ToolsMySQL import ConnectMySQL
 import numpy as np
 from collections import Counter
+
 
 # class GetIndexData(object):
 # 
@@ -247,16 +247,19 @@ class GetIndexData(object):
                 score_dict_temp['{}'.format(score)] = 1
             else:
                 score_dict_temp['{}'.format(score)] += 1
+        # 评分个数排序
         score_dict_temp = {data[0]: data[1] for data in sorted(score_dict_temp.items(), key=lambda x: x[0])}
+        # 排序后构建2个list
         for score, score_num in score_dict_temp.items():
             score_list.append(score)
             score_num_list.append(score_num)
+        # 最高评分
         va = score_list_temp[0]
         for value in score_list_temp:
             if value > va:
                 va = value
         return va, score_list, score_num_list
-    
+
     # @numba.jit()
     def get_movies_actor_max(self, limit):
         sql = """
@@ -267,14 +270,12 @@ class GetIndexData(object):
         actors_dict_temp = {}
         for actors in actors_list_temp:
             actors: str
+            # 分割演员
             for actor in actors.split(','):
                 actors_list.append(actor)
+        # 演员参演最多
         counter = Counter(actors_list)
         max_actors = counter.most_common(1)[0][0]
-        # for item in actors_list:
-        #     print(item)
-            # actors_dict_temp['{}'.format(item)] = actors_dict_temp.setdefault(item, 0) + 1
-        # print(actors_list)
         return max_actors
 
     def get_movies_country_max(self, limit):
@@ -285,9 +286,10 @@ class GetIndexData(object):
         country_list = []
         for countrys in countrys_list_temp:
             countrys: str
+            # 分割国家
             for country in countrys.split(','):
                 country_list.append(country)
-        # return np.max(country_list, key=country_list.count)
+        # 拍摄最多国家
         counter = Counter(country_list)
         max_country = counter.most_common(1)[0][0]
         return max_country
@@ -302,16 +304,18 @@ class GetIndexData(object):
         m_type_echarts_list = []
         for m_types in m_types_list_temp:
             m_types: str
+            # 分割类型
             for m_type in m_types.split(','):
                 m_type_list.append(m_type)
+        # 电影类型计数
         for m_type in m_type_list:
             if m_type_echarts_dict.get('{}'.format(m_type)) is None:
                 m_type_echarts_dict['{}'.format(m_type)] = 1
             else:
                 m_type_echarts_dict['{}'.format(m_type)] += 1
+        # 构建返回数据
         for key, value in m_type_echarts_dict.items():
             m_type_echarts_list.append({'name': key, 'value': value})
-
         return len(set(m_type_list)), m_type_echarts_list
 
     def get_movies_languange_max(self, limit):
@@ -322,8 +326,10 @@ class GetIndexData(object):
         languages_list = []
         for languages in languages_list_temp:
             languages: str
+            # 语言分割
             for language in languages.split(','):
                 languages_list.append(language)
+        # 最大语言次数
         counter = Counter(languages_list)
         ma = counter.most_common(1)[0][0]
         return ma

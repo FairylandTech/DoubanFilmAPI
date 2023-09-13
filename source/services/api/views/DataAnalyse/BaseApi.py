@@ -15,7 +15,7 @@ from source.services.utils.GetDetailedMsg import GetDetailedMsg
 public_api = PublicApi()
 get_index_data = GetIndexData()
 get_detailed_msg = GetDetailedMsg()
-num = 10000
+num = 500
 m_type_echarts_list = None
 score_list = None
 score_num_list = None
@@ -170,7 +170,7 @@ def base_info_amount():
     global num
     try:
         if request.args.get('num') is None:
-            num = 10000
+            num = 500
         else:
             num = request.args.get('num')
         return jsonify(public_api.get_build_response_json(
