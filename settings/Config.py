@@ -42,8 +42,8 @@ class DevelopmentConfig(DefaultConfig):
     
 class ProductionConfig(DefaultConfig):
     __version = '1.0.0_Releases'
-    MYSQL_HOST = 'mapping.fairy.host'
-    MYSQL_PORT = 65508
+    MYSQL_HOST = ''
+    MYSQL_PORT = 0
     MYSQL_USER = 'root'
     MYSQL_PASSWORD = 'Mysql.pwd_5.8%'
     MYSQL_DATABASE = 'tb_douban_movies'
