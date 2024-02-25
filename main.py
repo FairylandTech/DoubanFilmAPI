@@ -9,4 +9,4 @@
 from source.services.core.CoreServer import run
 
 if __name__ == '__main__':
-    run(debug=False, host='0.0.0.0', port=64200)
+    run(debug=False, host='0.0.0.0')

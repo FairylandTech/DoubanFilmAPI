@@ -4,5 +4,5 @@ ENTRYPOINT ["top", "-b"]
 WORKDIR /application
 ADD . /application
 RUN pip install -r requirements.txt
-EXPOSE 64200
+EXPOSE 5000
 CMD ["python", "main.py"]
